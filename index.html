@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>WordCloud Example</title>
+    <script src="./wordcloud2.js"></script>
+</head>
+
+<body>
+
+
+    <h1>COMS 4995 Extra Credit Project: How text analysis technique works</h1>
+    <p><br>Text analysis techique is very important in our daily life, but how to make our text visulization? </p>
+    
+    <p><br>Here Changrong will teach us this tecinique.</p>
+    
+    <h3>technique procedure</h3>
+    <p>I write three json file which includes three different text, when you click each button, it will shows different visulization</p>
+
+    <p><br>I put some explanation in my javascript files and many comments to explain how each code works</p>
+    
+    <h3>Experience:</h4>
+    <p>writing text analysis is hard, I spend many days to write, but it is very interesting to create during the process</p>
+    <p><br>And I really enjoying! The only pity is I did not usint TF_IDF techniques, since I did not learn nlp before, which is </p>
+    <p><br>hard for me, but I will learn nlp next semester and use TF-IDF technique into my project, and I encourage you to use TF-IDF when you </p>
+    <p><br>do the text analysis technique</p>
+
+        <script>
+            //this is the code for create three buttons.
+        </script>
+    <div>
+        <div style="width: 1000px;margin: 140px auto;">
+            <div style="display: flex;justify-content: space-between;margin: 20px 0;">
+                <div>
+                    <input type="radio" name="sex" id="sex2" value="2">
+                    <label for='sex2'>all nations in North American</label>
+                </div>
+                <div>
+                    <input type="radio" name="sex" id="sex1" value="1">
+                    <label for='sex1'>all states in U.S</label>
+                </div>
+                <div>
+                    <input type="radio" name="sex" id="sex0" value="0">
+                    <label for='sex0'>all states in China</label>
+                </div>
+            </div>
+
+            <div id="canvas-container" style="float: left">
+                <canvas id="canvas" width="1000px" height="550px"></canvas>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script>
+    var selectID = null;
+    var els = document.querySelectorAll("[name=sex]")
+    for (el of els) {
+        el.addEventListener("click", function() {
+            if (selectID == this.id && selectID) {
+                this.checked = ""
+                selectID = null;
+            } else {
+                selectID = this.id;
+            }
+            if (selectID == 'sex0') {
+                WordCloud(canvas, options1);
+            }
+            if (selectID == 'sex1') {
+                WordCloud(canvas, options2);
+            }
+            if (selectID == 'sex2') {
+                WordCloud(canvas, options);
+            }
+
+        })
+    }
+
+    function GetRadioValue(radioName) {
+        var radios = document.getElementsByName(radioName);
+        for (var i = 0; i < radios.length; i++) {
+            var radio = radios.item(i);
+            if (radio.checked) {
+                return radio.value;
+            }
+        }
+    }
+    
+</script>
+
+
+
+<script>
+
+    //-------------------------------------JSON CODE PART------------------------------
+    //if you want to learn text analysis, first you need to learn how to write json data code!
+
+    // HERE IS MY FIRST visulization JSON DATACODE(all nations in North American), This json code is created by myself, 
+    //And each nation will shows in my visulization and each nations has different size in the visulization.
+
+    var wordFreqData = [
+        ['Cuba', 10],
+        ['Belize', 19],
+        ['Haiti', 85],
+        ['Nicaragua', 140],
+        ['Barbados', 43],
+        ['The Bahamas', 133],
+        ['Jamaica', 158],
+        ['Trinidad and Tobago', 24],
+        ['Honduras', 46],
+        ['El Salvador', 24],
+        ['Costa Rica', 61],
+        ['Panama', 48],
+        ['Guatemala', 32],
+        ['Dominican Republic', 37],
+        ['Mexico', 19],
+        ['Canada', 27],
+        ['Belize', 19],
+        ['Haiti', 13],
+        ['United States of America', 65],
+        ['Cuba', 10],
+        ['Belize', 19],
+        ['Haiti', 85],
+        ['Nicaragua', 140],
+        ['Barbados', 43],
+        ['The Bahamas', 133],
+        ['Jamaica', 158],
+        ['Trinidad and Tobago', 24],
+        ['Honduras', 46],
+        ['El Salvador', 24],
+        ['Costa Rica', 61],
+        ['Panama', 48],
+        ['Guatemala', 32],
+        ['Dominican Republic', 37],
+        ['Mexico', 19],
+        ['Canada', 27],
+        ['Belize', 19],
+        ['Haiti', 13],
+        ['United States of America', 65],
+        ['Cuba', 10],
+        ['Belize', 19],
+        ['Haiti', 85],
+        ['Nicaragua', 140],
+        ['Barbados', 43],
+        ['The Bahamas', 133],
+        ['Jamaica', 158],
+        ['Trinidad and Tobago', 24],
+        ['Honduras', 46],
+        ['El Salvador', 24],
+        ['Costa Rica', 61],
+        ['Panama', 48],
+        ['Guatemala', 32],
+        ['Dominican Republic', 37],
+        ['Mexico', 19],
+        ['Canada', 27],
+        ['Belize', 19],
+        ['Haiti', 13],
+        ['United States of America', 165],
+
+    ];
+
+
+    // HERE IS MY second visulization JSON DATACODE(all states in U.S), This json code is created by myself, 
+    //and I set these number after each states depends on their GDP ranking in American
+    //And each states will shows in my visulization and each nation has different size in the visulization.
+
+    var wordFreqData2 = [    ["California", 131],
+    ["Texas", 19],
+    ["New York", 95],
+    ["Florida", 90],
+    ["Pennsylvania", 43],
+    ["Ohio", 33],
+    ["Illinois", 58],
+    ["Georgia", 38],
+    ["North Carolina", 46],
+    ["Michigan", 48],
+    ["New Jersey", 50],
+    ["Virginia", 60],
+    ["Washington", 32],
+    ["Arizona", 73],
+    ["Massachusetts", 31],
+    ["Tennessee", 27],
+    ["Indiana", 77],
+    ["Maryland", 13],
+    ["Minnesota", 19],
+    ["Colorado", 35],
+    ["Wisconsin", 40],
+    ["South Carolina", 43],
+    ["Alabama", 33],
+    ["Louisiana", 58],
+    ["Kentucky", 38],
+    ["Oregon", 46],
+    ["Oklahoma", 48],
+    ["Connecticut", 50],
+    ["Iowa", 60],
+    ["Nevada", 32],
+    ["Mississippi", 29],
+    ["Arkansas", 27],
+    ["Utah", 25],
+    ["Kansas", 23],
+    ["Nebraska", 21],
+    ["Idaho", 19],
+    ["New Mexico", 17],
+    ["West Virginia", 15],
+    ["Hawaii", 13],
+    ["New Hampshire", 11]
+];
+   
+
+    // HERE IS MY third visulization JSON DATACODE(all states in China), This json code is created by myself, 
+    //and I set these number after each states depends on their GDP ranking in China
+    //And each nation will shows in my visulization and each nation has different size in the visulization.
+
+    var wordFreqData1 = [
+        ['Anhui', 27],
+        ['Beijing', 122],
+        ["Chongqing", 53],
+        ["Fujian", 16],
+        ["Gansu", 13],
+        ["Guangdong", 49],
+        ["Guangxi", 28],
+        ["Guizhou", 59],
+        ["Hainan", 62],
+        ["Hebei", 40],
+        ["Heilongjiang", 65],
+        ["Henan", 628],
+        ["Hong Kong", 54],
+        ["Hubei", 53],
+        ["Hunan", 56],
+        ["Inner Mongolia", 17],
+        ["Jiangsu", 47],
+        ["Jiangxi", 25],
+        ["Jilin", 19],
+        ["Liaoning", 52],
+        ["Macau", 58],
+        ["Ningxia", 41],
+        ["Qinghai", 29],
+        ["Shaanxi", 23],
+        ["Shandong", 81],
+        ["Shanghai", 20],
+        ["Shanxi", 25],
+        ["Sichuan", 46],
+        ["Tianjin", 22],
+        ["Tibet", 87],
+        ["Xinjiang", 71],
+        ["Yunnan", 26],
+        ["Zhejiang", 91],
+        ['Anhui', 27],
+        ['Beijing', 72],
+        ["Chongqing", 53],
+        ["Fujian", 16],
+        ["Gansu", 13],
+        ["Guangdong", 49],
+        ["Guangxi", 28],
+        ["Guizhou", 59],
+        ["Hainan", 62],
+        ["Hebei", 40],
+        ["Heilongjiang", 175],
+        ["Henan", 628],
+        ["Hong Kong", 61],
+        ["Hubei", 53],
+        ["Hunan", 56],
+        ["Inner Mongolia", 17],
+        ["Jiangsu", 57],
+        ["Jiangxi", 25],
+        ["Jilin", 149],
+        ["Liaoning", 252],
+        ["Macau", 58],
+        ["Ningxia", 41],
+        ["Qinghai", 29],
+        ["Shaanxi", 23],
+        ["Shandong", 81],
+        ["Shanghai", 20],
+        ["Shanxi", 35],
+        ["Sichuan", 56],
+        ["Tianjin", 42],
+        ["Tibet", 87],
+        ["Xinjiang", 71],
+        ["Yunnan", 26],
+        ["Zhejiang", 91]
+    ]
+
+    
+
+    //Hi everyone this part we will teach you the canvas part.
+
+    var canvas = document.getElementById('canvas');
+        var options = eval({
+        "list": wordFreqData, 
+        //let me introduce examples, such as  [['Audience',45],['Word Cloud', 21],['Here!!!',13]], as long as the format meets this requirement
+        "gridSize": 6, 
+        // this represent the Density, the smaller the number, the denser the word cloud
+
+        "weightFactor": 1, 
+        // this Font size = original size * weightFactor
+        "maxFontSize": 90, 
+        // this is Maximum font size
+        "minFontSize": 14, 
+        // this is Minimum font size
+        "fontWeight": 'normal', 
+        // this is Font weight
+        "fontFamily": 'Times, serif',
+         // this is Font family
+        "color": 'random-light', 
+        // this is Font color 'random-dark' or 'random-light'
+        "backgroundColor": '#222', 
+        // Background color
+        "minRotation": -1.5555,
+        "maxRotation": 0.5,
+        "rotateRatio": 1, 
+        // this isProbability of font tilting (rotation), 1 means always tilt (rotate)
+    });
+    //let's look at option 1
+    var options1 = eval({
+        "list": wordFreqData1, 
+        //or [['Audience',45],['Word Cloud', 21],['Here!!!',13]], as long as the format meets this requirement
+        "gridSize": 6, 
+        // Density, the smaller the number, the denser the word cloud
+        "weightFactor": 1, 
+        // this is Font size = original size * weightFactor
+        "maxFontSize": 90, 
+        // this is Maximum font size
+        "minFontSize": 14, 
+        // this is Minimum font size
+        "fontWeight": 'normal', 
+        // this is Font weight
+        "fontFamily": 'Times, serif', // this isFont family
+        "color": 'random-light', 
+        // this is Font color 'random-dark' or 'random-light'
+        "backgroundColor": '#222', 
+        // this is Background color
+        "minRotation": -1.5555,
+        "maxRotation": 0.5,
+        "rotateRatio": 1, 
+        // this is Probability of font tilting (rotation), 1 means always tilt (rotate)
+    });
+
+    //let's look at option 2
+    var options2 = eval({
+        "list": wordFreqData2, 
+        //for example. or [['Audience',45],['Word Cloud', 21],['Here!!!',13]], as long as the format meets this requirement
+        "gridSize": 6, 
+        // this is Density, the smaller the number, the denser the word cloud
+        "weightFactor": 1, 
+        // this is Font size = original size * weightFactor
+        "maxFontSize": 90, 
+        // this is Maximum font size
+        "minFontSize": 14, // this is Minimum font size
+        "fontWeight": 'normal', 
+        // this is Font weight
+        "fontFamily": 'Times, serif',
+         //this is  Font family
+        "color": 'random-light',
+         // this is Font color 'random-dark' or 'random-light'
+        "backgroundColor": '#222', 
+        // this is Background color
+        "minRotation": -1.5555,
+        "maxRotation": 0.5,
+        "rotateRatio": 1, 
+        // this is Probability of font tilting (rotation), 1 means always tilt (rotate)
+    });
+
+    //this is  Generate part 
+    WordCloud(canvas, options);
+
+
+
+
+</script>
+
+
+
+</html>
